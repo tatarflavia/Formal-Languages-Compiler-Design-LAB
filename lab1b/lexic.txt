@@ -1,0 +1,27 @@
+Lexic.txt (file containing mini language lexic description) 
+EBNF
+•	Special symbols:
+		Operators: + - * / < >  <=  ==  >=  sqrt && not
+		Separators: ( ) space ; { }
+		Reserved words: list(defined by me), int, bool, Initialise, char, string, Print, Read, Do, If, Else,While,For, Return
+•	Identifiers:-a sequence of letters
+		IDENT=LETTER{LETTER}
+		LETTER=”A”|...|”Z”|”a”|..|”z”
+•	Constants:
+		Integer:
+			INTEGER=”0”|[SIGN]UNSIGNED_NUMBER
+			UNSIGNED_NUMBER=NON_ZERO{DIGIT}
+			NON_ZERO=”1”|..|”9”
+			DIGIT=”0”|NON_ZERO
+			SIGN=”+”|”-”
+		Character:
+			CHAR=LETTER|DIGIT
+			LETTER=”A”|...|”Z”|”a”|..|”z”
+			DIGIT=”0”|...|”9”
+		String:
+			STRING= CHAR{ CHAR }
+			CHAR=LETTER|DIGIT
+			LETTER=”A”|...|”Z”|”a”|..|”z”
+			DIGIT=”0”|...|”9”
+		Bool:
+			BOOLEAN=”True”|”False”
