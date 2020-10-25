@@ -7,4 +7,4 @@ For example:
 
 p1 and p2: compute de max/min of 3 numbers; verify if a number is prime, compute gcd of 2 numbers, compute the solutions for a 2nd order equation, aso
 
-p3: compute the sum of n numbers, computer the max/min of n numbers
+p3: compute the sum of n numbers, computer the max/min of n numbs
