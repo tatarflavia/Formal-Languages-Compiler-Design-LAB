@@ -1,7 +1,7 @@
 Lexic.txt (file containing mini language lexic description) 
 EBNF
 •	Special symbols:
-		Operators: + - * / < >  <=  ==  >=  sqrt && not
+		Operators: "+" "-" "*" "/" "<" ">"  "<="  "=="  ">="  "sqrt" "&&" "not"
 		Separators: ( ) space ; { }
 		Reserved words: list(defined by me), int, bool, Initialise, char, string, Print, Read, Do, If, Else,While,For, Return
 •	Identifiers:-a sequence of letters
