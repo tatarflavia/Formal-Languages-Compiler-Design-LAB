@@ -1,7 +1,6 @@
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class SymbolTable {
 
@@ -10,16 +9,14 @@ public class SymbolTable {
     // Current capacity of hashes list
     private int numBuckets;
 
-    // Current size of array list
-    private int size;
+
 
     // Constructor (Initializes capacity, size and
     // empty chains.
     public SymbolTable()
     {
         hashTable = new ArrayList<>();
-        numBuckets = 257;
-        size = 0;
+        numBuckets = 256;
 
         // Create empty chains
         for (int i = 0; i < numBuckets; i++)
@@ -59,5 +56,6 @@ public class SymbolTable {
 
 
 }
+
 
 
