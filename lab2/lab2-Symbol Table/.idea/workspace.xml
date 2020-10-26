@@ -34,6 +34,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../PPD sem 1 an 3/lab2" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -59,6 +60,7 @@
       <updated>1603122072312</updated>
       <workItem from="1603122076992" duration="2786000" />
       <workItem from="1603644323337" duration="204000" />
+      <workItem from="1603719600967" duration="21000" />
     </task>
     <servers />
   </component>
@@ -70,6 +72,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="73" key="#Project_Structure/0.0.1536.824@0.0.1536.824" timestamp="1603122081416" />
+    <state x="549" y="170" key="FileChooserDialogImpl" timestamp="1603719620350">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="549" y="170" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1603719620350" />
     <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1603124797253">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -86,9 +92,9 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1603124797253" />
-    <state x="477" y="239" key="com.intellij.ide.util.TipDialog" timestamp="1603644323090">
+    <state x="477" y="239" key="com.intellij.ide.util.TipDialog" timestamp="1603719601126">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="477" y="239" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1603644323090" />
+    <state x="477" y="239" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1603719601126" />
   </component>
 </project>
