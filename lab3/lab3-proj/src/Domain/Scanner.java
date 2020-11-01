@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-/*
+
 
 public class Scanner {
     private ProgramInternalForm PIF;
@@ -119,4 +119,4 @@ public class Scanner {
         }
     }
 }
-*/
+
