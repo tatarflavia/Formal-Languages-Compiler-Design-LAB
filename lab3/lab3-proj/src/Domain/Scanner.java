@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
 public class Scanner {
     private ProgramInternalForm PIF;
     private SymbolTable SymbolTable;
