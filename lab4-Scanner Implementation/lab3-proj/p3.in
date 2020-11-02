@@ -1,0 +1,12 @@
+Read list<int> readList;
+Read int listSize;
+Read int toBeFound;
+Initialise int i=0;
+Initialise bool found=False;
+While(i<listSize){
+	If( readList[i]==toBeFound ){found=True;}
+	i=i+1;
+}
+If(found==True){
+Print “The number was found”;}
+Else{ Print “The number was not found.”;}

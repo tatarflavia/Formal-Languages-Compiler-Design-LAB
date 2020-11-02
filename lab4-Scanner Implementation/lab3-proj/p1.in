@@ -1,0 +1,5 @@
+Read int a;
+Read int b;
+Initialise int mean=0;
+mean=sqrt(a*b);
+Print “The result is: ” +mean;

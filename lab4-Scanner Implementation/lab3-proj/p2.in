@@ -1,0 +1,8 @@
+Read int a;
+Read int b;
+Read int c;
+Initialise int min=MAX;
+If (a<min){min=a;}
+If (b<min){min=b;}
+If (c<min){min=c;}
+Print “The result is: ”+min;

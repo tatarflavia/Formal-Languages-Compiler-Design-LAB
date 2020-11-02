@@ -1,0 +1,31 @@
+Program Internal Form:
+ Token 			 Position in ST
+
+Read						0
+int						0
+1						(97,0)
+;						0
+Read						0
+int						0
+1						(98,0)
+;						0
+Initialise						0
+int						0
+1						(161,0)
+=						0
+0						(48,0)
+;						0
+1						(161,0)
+=						0
+sqrt						0
+(						0
+1						(97,0)
+*						0
+1						(98,0)
+)						0
+;						0
+Print						0
+0						(111,0)
++						0
+1						(161,0)
+;						0

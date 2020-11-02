@@ -1,0 +1,8 @@
+Symbol Table:
+ Position 			 Token
+
+(48,0)			0
+(97,0)			a
+(98,0)			b
+(111,0)			“The result is: ”
+(161,0)			mean

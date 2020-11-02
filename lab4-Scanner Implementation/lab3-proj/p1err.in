@@ -1,0 +1,5 @@
+Initialise int a=@;                                      
+Initialise int b=9;
+Initialise int mean=0kml;                    
+mean=sqrt(a*b);
+Print “The result is: ”+mean;
