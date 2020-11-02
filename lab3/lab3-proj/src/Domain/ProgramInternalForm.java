@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/*
+
 public class ProgramInternalForm {
     private List<Map.Entry<String,Integer>> pairList=new ArrayList<>();
 
@@ -23,4 +23,4 @@ public class ProgramInternalForm {
 
 
 }
-*/
+

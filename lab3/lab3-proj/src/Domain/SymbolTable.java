@@ -3,7 +3,7 @@ package Domain;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
-/*
+
 
 public class SymbolTable {
     private List<List<String>> hashTable;
@@ -57,4 +57,4 @@ public class SymbolTable {
 
 
 }
-*/
+
