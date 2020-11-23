@@ -80,4 +80,8 @@ public class Grammar {
 
         return list;
     }
+
+    boolean isTerminal(String terminal) {
+        return terminals.contains(terminal) || terminal.equals("epsilon");
+    }
 }
