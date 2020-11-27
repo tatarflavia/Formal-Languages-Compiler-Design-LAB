@@ -9,5 +9,9 @@ public class Main {
         System.out.println(grammar.getStartingSymbol());
         System.out.println(grammar.getProductions());
         System.out.println(grammar.getProductionsForNonTerminal("A"));
+        Parser parser=new Parser();
+        parser.first();
+        parser.follow();
+
     }
 }

@@ -81,6 +81,20 @@ public class Grammar {
         return list;
     }
 
+    public List<Map.Entry<String, List<String>>> getRightHandSideProductionsForNonTerminal(String nonTerminal) {
+
+        List<Map.Entry<String, List<String>>> list = new ArrayList<>();
+
+        for (Map.Entry<String, List<String>> entry : productions) {
+            if (entry.getValue().contains(nonTerminal))
+                list.add(entry);
+        }
+
+        return list;
+    }
+
+
+
     boolean isTerminal(String terminal) {
         return terminals.contains(terminal) || terminal.equals("epsilon");
     }
