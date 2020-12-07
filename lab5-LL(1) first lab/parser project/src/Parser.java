@@ -13,6 +13,36 @@ public class Parser {
         follows = new ArrayList<>();
     }
 
+    void constructTable() {
+        Map<Map.Entry<String, String>, Map.Entry<List<String>, Integer>> table = new HashMap<>();
+        List<String> rows = grammar.getNonTerminals();
+        rows.addAll(grammar.getTerminals());
+        rows.add("$");
+        List<String> columns = grammar.getTerminals();
+        columns.add("$");
+        for (String row : rows) {
+            for (String col : columns) {
+                if (grammar.isTerminal(row)) {
+                    Map.Entry<String, List<String>> production = grammar.getProductionsForNonTerminal(row).get(0);
+                    List<String> firsts = getFirstForNonTerminal(production.getValue().get(0));
+                    if (!firsts.contains("epsilon")) {
+                        // to be done
+                    }
+                } else if (row.equals(col)) {
+                    table.put(Map.entry(row, col), Map.entry(Arrays.asList("pop"), 0));
+                } else if (row.equals("$") && row.equals("$")) {
+                    table.put(Map.entry(row, col), Map.entry(Arrays.asList("acc"), 0));
+                } else {
+                    table.put(Map.entry(row, col), Map.entry(Arrays.asList("err"), 0));
+                }
+            }
+        }
+    }
+
+    List<String> getFirstForNonTerminal(String nonTerminal) {
+        Map<String, List<String>> first = firsts.get(firsts.size() - 1);
+        return first.get(nonTerminal);
+    }
 
     void first() {
         // preparing the First of 0 instance for every nonTerm = INITIALIZATION
