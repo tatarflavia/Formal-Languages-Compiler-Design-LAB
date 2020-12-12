@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -6,36 +9,163 @@ public class Parser {
     private Grammar grammar;
     private List<Map<String, List<String>>> firsts;
     private List<Map<String, List<String>>> follows;
+    private Map<Map.Entry<String, String>, Map.Entry<List<String>, Integer>> table;
 
     public Parser() {
         grammar = new Grammar();
         firsts = new ArrayList<>();
+        first();
         follows = new ArrayList<>();
+        follow();
+        table=constructTable();
     }
 
-    void constructTable() {
+    public Map<String, List<String>> getFirst() {
+        return firsts.get(firsts.size()-1);
+    }
+
+    public Map<String, List<String>> getFollow() {
+        return follows.get(follows.size()-1);
+    }
+
+    public Map<Map.Entry<String, String>, Map.Entry<List<String>, Integer>> getTable() {
+        return table;
+    }
+
+    //function that constructs the table of LL(1) parser
+    Map<Map.Entry<String, String>, Map.Entry<List<String>, Integer>> constructTable() {
+        //here we will hold the calculated table
         Map<Map.Entry<String, String>, Map.Entry<List<String>, Integer>> table = new HashMap<>();
+        //for the rows we add all symbols from grammar plus $
         List<String> rows = grammar.getNonTerminals();
         rows.addAll(grammar.getTerminals());
         rows.add("$");
+        //for the columns we add all the terminals plus $
         List<String> columns = grammar.getTerminals();
         columns.add("$");
+        //we start going cell by cell in the table to fill it
         for (String row : rows) {
             for (String col : columns) {
-                if (grammar.isTerminal(row)) {
-                    Map.Entry<String, List<String>> production = grammar.getProductionsForNonTerminal(row).get(0);
-                    List<String> firsts = getFirstForNonTerminal(production.getValue().get(0));
-                    if (!firsts.contains("epsilon")) {
-                        // to be done
+                //at first we add err in this cell and then we replace when convenient
+                table.put(Map.entry(row, col), Map.entry(Arrays.asList("err"), 0));
+                if (!grammar.isTerminal(row)) {
+                    //we are in first rule, where the row is a nonTerm=> M(A, a)=
+                    //we get all its productions for this nonTerm A
+                    List<Map.Entry<String, List<String>>> nonTermProductions=grammar.getProductionsForNonTerminal(row);
+                    //for each prod we calculate first of RHS, alpha
+                    for(Map.Entry<String, List<String>> production:nonTermProductions){
+                        //first of RHS, alpha
+                        List<String> firstOfRHSProd=firsts.get(firsts.size()-1).get(production.getValue().get(0));
+                        //if eps is not in the res, then first case and add to the cell
+                        if(!firstOfRHSProd.contains("epsilon")){
+                            //for every a term from the first of RHS of A we add (alpha, i) to table
+                            for(String first:firstOfRHSProd){
+                                table.replace(Map.entry(row,first),Map.entry(production.getValue(),grammar.getProductions().indexOf(production)+1));
+                            }
+                        }
+                        else{
+                            //second case where eps is in first => the col is given by follow(A)
+                            List<String> followOfNOnTerm=follows.get(follows.size()-1).get(row);
+                            //for every b term from the follow of A we add (alpha, i) to table
+                            for(String follow:followOfNOnTerm){
+                                if(follow.equals("epsilon")){
+                                    follow="$";
+                                }
+                                table.replace(Map.entry(row,follow),Map.entry(production.getValue(),grammar.getProductions().indexOf(production)+1));
+
+                            }
+                        }
                     }
-                } else if (row.equals(col)) {
-                    table.put(Map.entry(row, col), Map.entry(Arrays.asList("pop"), 0));
-                } else if (row.equals("$") && row.equals("$")) {
-                    table.put(Map.entry(row, col), Map.entry(Arrays.asList("acc"), 0));
-                } else {
-                    table.put(Map.entry(row, col), Map.entry(Arrays.asList("err"), 0));
+                    //second case where $,$ => acc
+                }  else if (row.equals("$") && col.equals(row)) {
+                    table.replace(Map.entry(row, col), Map.entry(Arrays.asList("acc"), 0));
+                }//third case where a,a => pop
+                else if (row.equals(col)) {
+                    table.replace(Map.entry(row, col), Map.entry(Arrays.asList("pop"), 0));}
+                else {
+                    //last case where err otherwise
+                    table.replace(Map.entry(row, col), Map.entry(Arrays.asList("err"), 0));
                 }
             }
+        }
+        //System.out.println(table);
+        return table;
+    }
+
+    //given a sequence, we verify by parsing if it is accepted by the grammar
+    public Queue<String> parse(List<String> sequence){
+        //initial config: alpha = w$, beta= S$, pi=eps
+        Stack<String> alpha=new Stack<>();
+        Stack<String> beta=new Stack<>();
+        Queue<String> pi=new LinkedList<>();
+        //init config for alpha
+        alpha.push("$");
+        for(int i=sequence.size()-1;i>=0;i--){
+            alpha.push(sequence.get(i));
+        }
+        //init config for beta
+        beta.push("$");
+        beta.push(grammar.getStartingSymbol());
+        //we start the alg of LL(1) parsing for the given sequence
+        while(true){
+            String choice="";
+            //eps should be treated as $, special case
+            if(beta.peek().equals("epsilon")){
+                choice="$";
+            }
+            else choice=beta.peek();
+
+            //first case where pop action is met in the table
+            //the cell given by head of beta and head of alpha= pop
+            if(table.get(Map.entry(choice,alpha.peek())).equals(Map.entry(Arrays.asList("pop"),0))){
+                //pop case: pop beta and alpha, pi stays the same
+                alpha.pop();
+                beta.pop();
+            }
+            //second case where accept action is met in the table
+            //the 2 stacks are only made of $
+            //this is where the alg ends, we return the result, seq is accepted
+            else if(alpha.peek().equals("$") && alpha.peek().equals(choice)){
+                writeToFileProdString(pi.toString());
+                return pi;
+            }
+            //third case where error is met in the table
+            //this means that there is not a way for this seq to be accepted
+            //bad case, the alg stops
+            else if(table.get(Map.entry(choice,alpha.peek())).equals(Map.entry(Arrays.asList("err"),0))){
+                return null;
+            }
+            else{
+                //last case where  the cell= (prod, number of prod)
+                // we have to pop beta and push symbols of prod to beta
+                String nonTerm=beta.pop();
+                Map.Entry<List<String>, Integer> tableCell=table.get(Map.entry(nonTerm,alpha.peek()));
+                //and we add the number of prod at the end of the pi queue
+                pi.add(tableCell.getValue().toString());
+                for(int i=tableCell.getKey().size()-1;i>=0;i--){
+                    if(!tableCell.getKey().get(i).equals("epsilon")){
+                        beta.push(tableCell.getKey().get(i));
+                    }
+
+                }
+            }
+            //System.out.println(alpha);
+            //System.out.println(beta);
+            //System.out.println(pi);
+
+        }
+
+    }
+
+
+    void writeToFileProdString(String prodString){
+        try {
+            FileWriter myWriter = new FileWriter("stringOutput.txt");
+            myWriter.write(prodString);
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred when writing to file the prod string.");
         }
     }
 
@@ -106,8 +236,9 @@ public class Parser {
         for (String terminal: grammar.getTerminals()) {
             firsts.get(index-1).put(terminal, Collections.singletonList(terminal));
         }
+        firsts.get(index-1).put("epsilon", Collections.singletonList("epsilon"));
         //print the result
-        System.out.println(firsts.get(index-1));
+        //System.out.println(firsts.get(index-1));
 
 
     }
@@ -217,7 +348,7 @@ public class Parser {
             }
         }
         //print the result
-        System.out.println(follows.get(follows.size()-1));
+        //System.out.println(follows.get(follows.size()-1));
     }
 
 
