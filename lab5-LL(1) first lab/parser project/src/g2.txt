@@ -1,0 +1,19 @@
+S,T,C,E,R,I,Z,P,TYPE,O
+if,then,else,id,const,:=,=,<>,Read,Print,int,bool,char
+S
+P,Z O
+P,Z S O
+Z,Read TYPE id
+TYPE,int
+TYPE,bool
+TYPE,char
+S,if C then I T
+T,epsilon
+T,else I
+C,E R E
+E,id
+E,const
+R,=
+R,<>
+I,id := E
+O,Print id

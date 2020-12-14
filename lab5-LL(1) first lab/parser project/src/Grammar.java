@@ -20,7 +20,7 @@ public class Grammar {
     }
 
     private void readFromFile() {
-        File grammarFile = new File("src/g1.txt");
+        File grammarFile = new File("src/g2.txt");
         try {
             Scanner scanner = new Scanner(grammarFile);
 
